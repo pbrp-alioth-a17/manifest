@@ -18,8 +18,8 @@ producing a release.
 ```bash
 mkdir -p ~/pbrp-alioth-a17
 cd ~/pbrp-alioth-a17
-repo init -u https://github.com/pbrp-alioth-a17/manifest -b pbrp-a17
-repo sync -c -j8
+repo init -u https://github.com/pbrp-alioth-a17/manifest -b pbrp-a17 -g default
+repo sync -c -j50
 source build/envsetup.sh
 lunch pb_alioth cp2a user
 recoverybuild bootimage -j4
@@ -65,3 +65,49 @@ uses checkout-local device metadata and forwards its build entry point to
 `vendor/lineage/build/tools/pb_build.sh`; setup performs no network fetch.
 Alioth's `m pbrp` invokes its metadata-aware packagers. Set `PBRP_ROM` or
 `PBRP_METADATA_BOOT` before packaging. Phone verification remains pending.
+
+## Default recovery source set
+
+Normal `repo sync` selects 733 recovery build/configuration repositories,
+down from 1,222. The full catalog retains 647 optional projects.
+Unselected upstream platform projects remain in `snippets/optional.xml`,
+included with the standard Repo `notdefault` group. Branch defaults and all
+project identities, remotes and file links are preserved. Kernel platform
+snippets remain separately opt-in. Do not use `-g all` for routine recovery
+builds: that selects the entire optional catalog too.
+
+The source set was derived from Alioth's successful Boot/signing Ninja inputs
+and strict Soong source-selection validation in the recovery checkout. Shared API, license, build
+plugin and test-tool declarations referenced by the unmodified Android build
+system still belong to the required set. Their inclusion does not install
+apps or test suites into recovery. Strict Soong generation passed with missing dependencies disallowed. The
+Boot/signing target dry run passed, and all 52,357 existing source-file inputs
+belong to the default set. This is an Alioth source-configuration baseline, not a
+claim that every device's extra dependencies are already enabled.
+
+Fetch additional projects deliberately, after identifying a build/device
+requirement:
+
+```sh
+source build/envsetup.sh
+recoverysync external/unrar                    # exact project path
+recoverysync --check --device device/xiaomi/alioth  # offline preflight
+recoverysync --device device/xiaomi/alioth      # declared prerequisites
+repo list -a -g all -p                         # inspect available projects
+```
+
+`recoverysync` adds only requested `path:` groups, preserving existing group
+selections, and runs scoped `repo sync -c -j50`. Selections persist for later
+normal syncs. Device files use `recovery.dependencies` or
+`lineage.dependencies`, with manifest-known `target_path` entries. New device
+repos absent from the catalog need an explicit local manifest. Builds and
+`lunch` never guess GitHub repositories or automatically fetch ROM sources.
+
+For an existing checkout initialized with `-g all`, rerun `repo init` with
+`-g default` (plus any deliberately selected device/kernel groups) before
+syncing. The helper never forces local changes. Repo may remove clean projects no
+longer selected by the manifest; dirty projects block that removal. Preserve
+local work first, or retain a project explicitly with its `path:` group when
+migrating a previously full checkout.
+Standard Repo grouping is documented in the
+[manifest format](https://gerrit.googlesource.com/git-repo/+/HEAD/docs/manifest-format.md).

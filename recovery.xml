@@ -62,4 +62,6 @@
   <include name="snippets/kernel-6.6.xml" groups="notdefault" />
   <include name="snippets/kernel-6.12.xml" groups="notdefault" />
   <include name="snippets/kernel-6.18.xml" groups="notdefault" />
+  <remove-project name="platform/build/blueprint" path="build/blueprint" />
+  <project name="android_build_blueprint" path="build/blueprint" remote="pbrp-a17" groups="local::recovery-projects" />
 </manifest>
