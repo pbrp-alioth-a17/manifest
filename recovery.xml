@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <manifest>
   <remote name="pbrp-a17" fetch="https://github.com/pbrp-alioth-a17" revision="refs/heads/pbrp-a17" />
-  <!--Keep the existing recovery checkout scope; omit unrelated prebuilts and retired backends.-->
   <remove-project name="LineageOS/android_system_core" path="system/core" />
   <project name="android_system_core" path="system/core" groups="local::recovery-projects" remote="pbrp-a17" />
   <remove-project name="LineageOS/android_system_vold" path="system/vold" />
@@ -17,8 +16,7 @@
   <project name="phhusson/vendor_lptools" path="external/lptools" revision="refs/heads/master" groups="local::recovery-projects" />
   <project name="external_magisk-prebuilt" path="external/magisk-prebuilt" remote="pbrp-a17" groups="local::recovery-projects" />
   <project name="PitchBlackRecoveryProject/vendor_utils" path="vendor/utils" revision="refs/heads/pb" groups="local::recovery-projects">
-    <linkfile src="pb_build.sh" dest="vendor/pb/pb_build.sh" />
-  </project>
+    </project>
   <project name="device_xiaomi_alioth-pbrp" path="device/xiaomi/alioth" remote="pbrp-a17" groups="local::recovery-projects">
     <linkfile src="build/androidmk/allowlist.txt" dest="vendor/extra/build/androidmk/allowlist.txt" />
   </project>
@@ -27,9 +25,6 @@
   <project name="android_system_libhidl" path="system/libhidl" remote="pbrp-a17" groups="pdk,sysui-studio" />
   <remove-project name="LineageOS/android_bootable_recovery" path="bootable/recovery" />
   <project name="android_bootable_recovery" path="bootable/recovery" remote="pbrp-a17" groups="local::recovery-projects" />
-  <project name="vendor_pb" path="vendor/pb" remote="pbrp-a17" groups="local::recovery-projects">
-    <linkfile src="config/common.mk" dest="vendor/twrp/config/common.mk" />
-  </project>
   <project path="external/zip" name="android_external_zip" remote="pbrp-a17" groups="local::recovery-projects" />
   <remove-project name="LineageOS/android_bootable_deprecated-ota" path="bootable/deprecated-ota" />
   <remove-project name="platform/external/opencl/llvm-project" path="external/opencl/llvm-project" />
@@ -59,4 +54,9 @@
   <remove-project name="platform/prebuilts/go/darwin-x86" path="prebuilts/go/darwin-x86" />
   <remove-project name="platform/prebuilts/rust-toolchain/darwin" path="prebuilts/rust-toolchain/darwin" />
   <remove-project name="LineageOS/android_hardware_lineage_compat" path="hardware/lineage/compat" />
+  <remove-project name="LineageOS/android_vendor_lineage" path="vendor/lineage" />
+  <project name="vendor_lineage" path="vendor/lineage" remote="pbrp-a17" groups="local::recovery-projects">
+    <linkfile src="config/recovery.mk" dest="vendor/twrp/config/common.mk" />
+    <linkfile src="build/tools/pb_build.sh" dest="vendor/lineage/pb_build.sh" />
+  </project>
 </manifest>

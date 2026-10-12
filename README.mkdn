@@ -3,8 +3,9 @@
 Based on the LineageOS 24 / Android 17 manifest. The upstream structure is
 preserved: `default.xml`, `snippets/lineage.xml` and the kernel snippets.
 `default.xml` also includes `recovery.xml` for our recovery forks, device tree,
-kernel, required tools and project replacements. `vendor/utils` owns the
-`pb_build.sh` link into `vendor/pb`.
+kernel, required tools and project replacements. The PBRP-specific layer lives on the A17 `vendor/lineage` fork.
+Its `pb_build.sh` wrapper and TWRP common-product link are declared in
+`recovery.xml`; the redundant `vendor/pb` project is removed.
 
 Shared defaults track LineageOS 24, the official Android 17 release tag and
 `pbrp-a17` for our forks. Vendor exceptions retain their upstream branches.
@@ -34,7 +35,7 @@ packaging. Do not flash Alioth's placeholder vendor_boot image.
 ## Validation
 
 The manifest was checked with repo's actual parser against the approved
-1,223-project recovery checkout: project URLs, branch/tag selection and
+recovery checkout: project URLs, branch/tag selection and
 copy/link operations are preserved. The recovery-specific exclusions retain
 that checkout scope without rewriting the upstream project lists.
 
@@ -43,3 +44,9 @@ Boot/installer packaging checks passed; detailed runtime evidence and limits
 are in the device README. Latest UI, portability and dependency changes still
 require their exact image's phone checks. No device access or flashing was used
 for this manifest reorganization.
+
+The PBRP recovery layer now builds on the A17 `vendor_lineage` fork instead of
+the old `vendor_pb` project. Recovery flags, module defaults, tool packages and
+policy preservation checks pass. The completed Alioth user Boot build and
+Boot/installer package validators pass; the migrated image remains untested on
+the phone. Both new manifest links have verified existing source files.
