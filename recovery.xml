@@ -15,8 +15,7 @@
   <project name="android_device_qcom_twrp-common" path="device/qcom/twrp-common" remote="pbrp-a17" groups="local::recovery-projects" />
   <project name="phhusson/vendor_lptools" path="external/lptools" revision="refs/heads/master" groups="local::recovery-projects" />
   <project name="external_magisk-prebuilt" path="external/magisk-prebuilt" remote="pbrp-a17" groups="local::recovery-projects" />
-  <project name="PitchBlackRecoveryProject/vendor_utils" path="vendor/utils" revision="refs/heads/pb" groups="local::recovery-projects">
-    </project>
+  <project name="vendor_utils" path="vendor/utils" remote="pbrp-a17" groups="local::recovery-projects" />
   <project name="device_xiaomi_alioth-pbrp" path="device/xiaomi/alioth" remote="pbrp-a17" groups="local::recovery-projects">
     <linkfile src="build/androidmk/allowlist.txt" dest="vendor/extra/build/androidmk/allowlist.txt" />
   </project>
@@ -59,4 +58,8 @@
     <linkfile src="config/recovery.mk" dest="vendor/twrp/config/common.mk" />
     <linkfile src="build/tools/pb_build.sh" dest="vendor/lineage/pb_build.sh" />
   </project>
+  <include name="snippets/kernel-5.15.xml" groups="notdefault" />
+  <include name="snippets/kernel-6.6.xml" groups="notdefault" />
+  <include name="snippets/kernel-6.12.xml" groups="notdefault" />
+  <include name="snippets/kernel-6.18.xml" groups="notdefault" />
 </manifest>

@@ -5,7 +5,7 @@ preserved: `default.xml`, `snippets/lineage.xml` and the kernel snippets.
 `default.xml` also includes `recovery.xml` for our recovery forks, device tree,
 kernel, required tools and project replacements. The PBRP-specific layer lives on the A17 `vendor/lineage` fork.
 Its `pb_build.sh` wrapper and TWRP common-product link are declared in
-`recovery.xml`; the redundant `vendor/pb` project is removed.
+`recovery.xml`; the redundant vendor project is removed.
 
 Shared defaults track LineageOS 24, the official Android 17 release tag and
 `pbrp-a17` for our forks. Vendor exceptions retain their upstream branches.
@@ -46,7 +46,22 @@ require their exact image's phone checks. No device access or flashing was used
 for this manifest reorganization.
 
 The PBRP recovery layer now builds on the A17 `vendor_lineage` fork instead of
-the old `vendor_pb` project. Recovery flags, module defaults, tool packages and
+the old duplicate vendor project. Recovery flags, module defaults, tool packages and
 policy preservation checks pass. The completed Alioth user Boot build and
 Boot/installer package validators pass; the migrated image remains untested on
 the phone. Both new manifest links have verified existing source files.
+
+## Optional kernel platforms and local build helpers
+
+The upstream kernel snippets remain intact. Select their opt-in groups with
+`repo init -g default,kernel-platform-515` (or `kernel-platform-66`,
+`kernel-platform-612`, `kernel-platform-618`) when a device needs those source
+and toolchain projects. Default Alioth sync does not download them. Kernel
+prebuilts remain device configuration inputs; these groups do not certify a
+GKI port or replace Alioth's matching kernel/vendor dependency set.
+
+System Core now tracks our LineageOS 24-based recovery fork. The utility fork
+uses checkout-local device metadata and forwards its build entry point to
+`vendor/lineage/build/tools/pb_build.sh`; setup performs no network fetch.
+Alioth's `m pbrp` invokes its metadata-aware packagers. Set `PBRP_ROM` or
+`PBRP_METADATA_BOOT` before packaging. Phone verification remains pending.
