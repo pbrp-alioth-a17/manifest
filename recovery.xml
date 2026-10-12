@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<manifest>
+  <remote name="pbrp-a17" fetch="https://github.com/pbrp-alioth-a17" revision="refs/heads/pbrp-a17" />
+  <!--Keep the existing recovery checkout scope; omit unrelated prebuilts and retired backends.-->
+  <remove-project name="LineageOS/android_system_core" path="system/core" />
+  <project name="android_system_core" path="system/core" groups="local::recovery-projects" remote="pbrp-a17" />
+  <remove-project name="LineageOS/android_system_vold" path="system/vold" />
+  <project name="system_vold" path="system/vold" groups="local::recovery-projects" remote="pbrp-a17" />
+  <remove-project name="LineageOS/android_external_freetype" path="external/freetype" />
+  <project name="android_external_freetype" path="external/freetype" groups="pdk" remote="pbrp-a17" />
+  <remove-project name="LineageOS/android_system_security" path="system/security" />
+  <project name="android_system_security" path="system/security" groups="pdk" remote="pbrp-a17" />
+  <remove-project name="LineageOS/android_system_sepolicy" path="system/sepolicy" />
+  <project name="android_system_sepolicy" path="system/sepolicy" groups="pdk" remote="pbrp-a17" />
+  <project name="TeamWin/android_device_qcom_common" path="device/qcom/common" revision="refs/heads/android-14.1" groups="local::recovery-projects" />
+  <project name="android_device_qcom_twrp-common" path="device/qcom/twrp-common" remote="pbrp-a17" groups="local::recovery-projects" />
+  <project name="phhusson/vendor_lptools" path="external/lptools" revision="refs/heads/master" groups="local::recovery-projects" />
+  <project name="external_magisk-prebuilt" path="external/magisk-prebuilt" remote="pbrp-a17" groups="local::recovery-projects" />
+  <project name="PitchBlackRecoveryProject/vendor_utils" path="vendor/utils" revision="refs/heads/pb" groups="local::recovery-projects">
+    <linkfile src="pb_build.sh" dest="vendor/pb/pb_build.sh" />
+  </project>
+  <project name="device_xiaomi_alioth-pbrp" path="device/xiaomi/alioth" remote="pbrp-a17" groups="local::recovery-projects">
+    <linkfile src="build/androidmk/allowlist.txt" dest="vendor/extra/build/androidmk/allowlist.txt" />
+  </project>
+  <project name="kernel_xiaomi_sm8250" path="kernel/xiaomi/sm8250" remote="pbrp-a17" groups="local::recovery-projects" />
+  <remove-project name="platform/system/libhidl" path="system/libhidl" />
+  <project name="android_system_libhidl" path="system/libhidl" remote="pbrp-a17" groups="pdk,sysui-studio" />
+  <remove-project name="LineageOS/android_bootable_recovery" path="bootable/recovery" />
+  <project name="android_bootable_recovery" path="bootable/recovery" remote="pbrp-a17" groups="local::recovery-projects" />
+  <project name="vendor_pb" path="vendor/pb" remote="pbrp-a17" groups="local::recovery-projects">
+    <linkfile src="config/common.mk" dest="vendor/twrp/config/common.mk" />
+  </project>
+  <project path="external/zip" name="android_external_zip" remote="pbrp-a17" groups="local::recovery-projects" />
+  <remove-project name="LineageOS/android_bootable_deprecated-ota" path="bootable/deprecated-ota" />
+  <remove-project name="platform/external/opencl/llvm-project" path="external/opencl/llvm-project" />
+  <remove-project name="kernel/prebuilts/6.1/arm64" path="kernel/prebuilts/6.1/arm64" />
+  <remove-project name="kernel/prebuilts/6.1/x86-64" path="kernel/prebuilts/6.1/x86_64" />
+  <remove-project name="kernel/prebuilts/6.6/arm64" path="kernel/prebuilts/6.6/arm64" />
+  <remove-project name="kernel/prebuilts/6.6/x86-64" path="kernel/prebuilts/6.6/x86_64" />
+  <remove-project name="kernel/prebuilts/6.12/arm64" path="kernel/prebuilts/6.12/arm64" />
+  <remove-project name="kernel/prebuilts/6.12/x86-64" path="kernel/prebuilts/6.12/x86_64" />
+  <remove-project name="kernel/prebuilts/6.18/arm64" path="kernel/prebuilts/6.18/arm64" />
+  <remove-project name="kernel/prebuilts/6.18/x86-64" path="kernel/prebuilts/6.18/x86_64" />
+  <remove-project name="kernel/prebuilts/mainline/arm64" path="kernel/prebuilts/mainline/arm64" />
+  <remove-project name="kernel/prebuilts/mainline/x86-64" path="kernel/prebuilts/mainline/x86_64" />
+  <remove-project name="kernel/prebuilts/common-modules/trusty/6.6/arm64" path="kernel/prebuilts/common-modules/trusty/6.6/arm64" />
+  <remove-project name="kernel/prebuilts/common-modules/trusty/6.12/arm64" path="kernel/prebuilts/common-modules/trusty/6.12/arm64" />
+  <remove-project name="kernel/prebuilts/common-modules/virtual-device/6.1/arm64" path="kernel/prebuilts/common-modules/virtual-device/6.1/arm64" />
+  <remove-project name="kernel/prebuilts/common-modules/virtual-device/6.1/x86-64" path="kernel/prebuilts/common-modules/virtual-device/6.1/x86-64" />
+  <remove-project name="kernel/prebuilts/common-modules/virtual-device/6.6/arm64" path="kernel/prebuilts/common-modules/virtual-device/6.6/arm64" />
+  <remove-project name="kernel/prebuilts/common-modules/virtual-device/6.6/x86-64" path="kernel/prebuilts/common-modules/virtual-device/6.6/x86-64" />
+  <remove-project name="kernel/prebuilts/common-modules/virtual-device/6.12/arm64" path="kernel/prebuilts/common-modules/virtual-device/6.12/arm64" />
+  <remove-project name="kernel/prebuilts/common-modules/virtual-device/6.12/x86-64" path="kernel/prebuilts/common-modules/virtual-device/6.12/x86-64" />
+  <remove-project name="kernel/prebuilts/common-modules/virtual-device/6.18/arm64" path="kernel/prebuilts/common-modules/virtual-device/6.18/arm64" />
+  <remove-project name="kernel/prebuilts/common-modules/virtual-device/6.18/x86-64" path="kernel/prebuilts/common-modules/virtual-device/6.18/x86-64" />
+  <remove-project name="kernel/prebuilts/common-modules/virtual-device/mainline/arm64" path="kernel/prebuilts/common-modules/virtual-device/mainline/arm64" />
+  <remove-project name="kernel/prebuilts/common-modules/virtual-device/mainline/x86-64" path="kernel/prebuilts/common-modules/virtual-device/mainline/x86-64" />
+  <remove-project name="platform/prebuilts/clang/host/darwin-x86" path="prebuilts/clang/host/darwin-x86" />
+  <remove-project name="platform/prebuilts/go/darwin-x86" path="prebuilts/go/darwin-x86" />
+  <remove-project name="platform/prebuilts/rust-toolchain/darwin" path="prebuilts/rust-toolchain/darwin" />
+  <remove-project name="LineageOS/android_hardware_lineage_compat" path="hardware/lineage/compat" />
+</manifest>

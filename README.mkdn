@@ -1,36 +1,45 @@
-LineageOS
-===========
+# Android 17 PBRP recovery sources
 
-Getting started
----------------
+Based on the LineageOS 24 / Android 17 manifest. The upstream structure is
+preserved: `default.xml`, `snippets/lineage.xml` and the kernel snippets.
+`default.xml` also includes `recovery.xml` for our recovery forks, device tree,
+kernel, required tools and project replacements. `vendor/utils` owns the
+`pb_build.sh` link into `vendor/pb`.
 
-To get started with Android/LineageOS, you'll need to get familiar with [Source Control Tools](https://source.android.com/setup/develop).
+Shared defaults track LineageOS 24, the official Android 17 release tag and
+`pbrp-a17` for our forks. Vendor exceptions retain their upstream branches.
+There are no separate Alioth aliases or commit-pin snapshots. Record exact
+build revisions with `repo manifest -r -o /path/to/build-manifest.xml` when
+producing a release.
 
-To initialize your local repository using the LineageOS trees, use a command like this:
+## Build
+
+```bash
+mkdir -p ~/pbrp-alioth-a17
+cd ~/pbrp-alioth-a17
+repo init -u https://github.com/pbrp-alioth-a17/manifest -b pbrp-a17
+repo sync -c -j8
+source build/envsetup.sh
+lunch pb_alioth cp2a user
+recoverybuild bootimage -j4
 ```
-repo init -u https://github.com/LineageOS/android.git -b lineage-24.0 --git-lfs
-```
-Then to sync up:
-```
-repo sync
-```
-Please see the [LineageOS Wiki](https://wiki.lineageos.org/) for building instructions, by device.
 
+Select the product, release, variant and image target required by another port.
+See the [shared recovery commands](https://github.com/pbrp-alioth-a17/android_bootable_recovery/blob/pbrp-a17/README.md)
+and [Alioth build and packaging instructions](https://github.com/pbrp-alioth-a17/device_xiaomi_alioth-pbrp/blob/pbrp-a17/README.md).
+Alioth's complete kernel/staging wrapper remains available at
+`device/xiaomi/alioth/tools/build-recovery.sh`. Use matching ROM metadata for
+packaging. Do not flash Alioth's placeholder vendor_boot image.
 
-Submitting patches
-------------------
-Patches are always welcome! Please submit your patches via LineageOS Gerrit!
+## Validation
 
-Simply follow our guide on [how to submit patches](https://wiki.lineageos.org/submitting-patch-howto.html).
+The manifest was checked with repo's actual parser against the approved
+1,223-project recovery checkout: project URLs, branch/tag selection and
+copy/link operations are preserved. The recovery-specific exclusions retain
+that checkout scope without rewriting the upstream project lists.
 
-To view the status of your and others' patches, visit [LineageOS Gerrit Code Review](https://review.lineageos.org/).
-
-
-Buildbot
---------
-
-All supported devices are built weekly and periodically as changes are committed to ensure the source trees remain buildable.
-
-You can view the current build statuses at [LineageOS Buildkite](https://buildkite.com/lineageos).
-
-Builds produced weekly by the buildbot can be downloaded from [LineageOS downloads](https://download.lineageos.org/).
+Android dependencies were audited over the network on 2026-10-12. Build and
+Boot/installer packaging checks passed; detailed runtime evidence and limits
+are in the device README. Latest UI, portability and dependency changes still
+require their exact image's phone checks. No device access or flashing was used
+for this manifest reorganization.
